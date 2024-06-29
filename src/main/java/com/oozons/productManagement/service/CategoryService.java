@@ -7,6 +7,8 @@ import java.util.List;
 public interface CategoryService {
 
 
+    Category getCategoryByCode(String code);
+
     Category createCategory(Category category);
 
     List<Category> getAllCategories();

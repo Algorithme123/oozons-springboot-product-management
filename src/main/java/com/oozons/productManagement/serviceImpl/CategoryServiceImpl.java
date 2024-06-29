@@ -17,6 +17,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category getCategoryByCode(String code){
+        return this.categorieRepository.getCategoriesByCode(code);
+    }
+
+    @Override
     public Category createCategory(Category category) {
 
         category.setCode(this.generateCode(category));

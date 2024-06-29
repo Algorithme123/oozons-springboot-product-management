@@ -57,4 +57,15 @@ public class CategoryController {
             throw new InternalServerException("An error occurred while updating the category.");
         }
     }
+
+    @RequestMapping(value="/categories/{code}", method=RequestMethod.GET)
+    public ResponseEntity<Category> getCategoryByCode(@RequestBody String code){
+        try {
+            Category oneCategory = this.categoryService.getCategoryByCode(code);
+            return  ResponseEntity.ok(oneCategory);
+        }catch (Exception e){
+            throw new InternalServerException(" category Not Found.");
+
+        }
+    }
 }
