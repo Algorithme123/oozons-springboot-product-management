@@ -21,14 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
         return this.categorieRepository.getCategoriesByCode(code);
     }
 
+
     @Override
     public Category createCategory(Category category) {
-
-        category.setCode(this.generateCode(category));
-
-       return this.categorieRepository.save(category);
+        category.setCode(this.generateCode(category));  // Génère un code basé sur le libellé
+        return this.categorieRepository.save(category);
     }
-
 
     @Override
     public List<Category> getAllCategories() {
@@ -55,10 +53,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-    public String generateCode(Category category){
 
-        String code = category.getLibelle().substring(0,3).toUpperCase() + "_CAT";
-
-        return code;
+    public String generateCode(Category category) {
+        return category.getLibelle().substring(0,3).toUpperCase() + "_CAT";
     }
 }

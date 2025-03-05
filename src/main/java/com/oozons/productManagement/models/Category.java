@@ -1,6 +1,5 @@
 package com.oozons.productManagement.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -13,12 +12,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code",nullable = false)
+    @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "libelle",nullable = false)
+    @Column(name = "libelle", nullable = false)
     private String libelle;
-
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
@@ -27,10 +25,15 @@ public class Category {
         super();
     }
 
-    public Category(String code,String libelle){
+    public Category(String code, String libelle) {
+        this.code = code;
+        this.libelle = libelle;
+    }
 
-        this.code=code;
-        this.libelle=libelle;
+    public Category(Long id, String code, String libelle) {
+        this.id = id;
+        this.code = code;
+        this.libelle = libelle;
     }
 
     public Long getId() {
