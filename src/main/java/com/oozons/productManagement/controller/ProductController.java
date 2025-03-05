@@ -45,12 +45,14 @@ public class ProductController {
                     .filter(p -> p.getId().equals(id))
                     .findFirst()
                     .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found."));
+
             String result = this.productService.deleteProduct(product);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             throw new ResourceNotFoundException("Product with id " + id + " not found.");
         }
     }
+
 
     @RequestMapping(value = "/products/update/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
