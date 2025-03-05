@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql-authentication
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: authentication_mysql
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Admin2020
+      MYSQL_ROOT_PASSWORD: Admin2020
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - sql-authentication-network
+
+  phpmyadmin:
+    container_name: phpmyadmin-authentication
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8070:80"
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - sql-authentication-network
+
+  spring-app:
+    container_name: product-management-app
+    build: .
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authentication_mysql?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: Admin2020
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - sql-authentication-network
+
+volumes:
+  mysql-data:
+
+networks:
+  sql-authentication-network:
+    driver: bridge
